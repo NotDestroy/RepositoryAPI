@@ -20,8 +20,7 @@ class Config
     {
         try {
             $this->get($key);
-        } catch
-        (\Api\Base\KeyNotFound $e) {
+        } catch (\Api\Base\KeyNotFound $e) {
             return false;
         }
 
@@ -44,16 +43,15 @@ class Config
             if (empty($arrData)) {
                 throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
             }
-            if (array_key_exists($arrKeys[$i], $arrData)) {
-                if ($rightAmount === $i) {
-                    return $arrData[$arrKeys[$i]];
-                } else {
-                    $arrData = $arrData[$arrKeys[$i]];
-                    continue;
-                }
-            } else {
+            if (!array_key_exists($arrKeys[$i], $arrData)) {
                 throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
             }
+
+            if ($rightAmount === $i) {
+                return $arrData[$arrKeys[$i]];
+            }
+
+            $arrData = $arrData[$arrKeys[$i]];
         }
         throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
     }
