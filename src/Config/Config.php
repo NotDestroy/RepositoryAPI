@@ -38,16 +38,16 @@ class Config
         $arrKeys     = explode('/', $key);
         $amount      = count($arrKeys);
         $rightAmount = ($amount - 1);
-        $dataArr     = $this->arrData;
+        $arrData     = $this->arrData;
         for ($i = 0; $i <= $amount; $i++) {
-            if (empty($dataArr)) {
+            if (empty($arrData)) {
                 throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
             }
-            if (array_key_exists($arrKeys[$i], $dataArr)) {
+            if (array_key_exists($arrKeys[$i], $arrData)) {
                 if ($rightAmount === $i) {
-                    return $dataArr[$arrKeys[$i]];
+                    return $arrData[$arrKeys[$i]];
                 } else {
-                    $dataArr = $dataArr[$arrKeys[$i]];
+                    $arrData = $arrData[$arrKeys[$i]];
                     continue;
                 }
             } else {

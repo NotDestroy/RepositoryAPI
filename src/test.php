@@ -20,5 +20,5 @@ $arr = [
 ];
 $q   = new \Api\Base\Config\Config($arr);
 
-var_dump($q->get('c/g'));
+var_dump($q->get('c/y/w/l/j'));
 
