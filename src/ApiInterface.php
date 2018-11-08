@@ -1,5 +1,7 @@
 <?php
 
+namespace Api\Base;
+
 interface ApiInterface
 {
 

@@ -1,47 +1,41 @@
 <?php
 
-class Config implements configInterface
+namespace Api\Base\Config;
+
+class Config
 {
-    /**
-     * @param $pathAuthoload
-     * @param $pathDb
-     * @param $basePath
-     * @param $bootstrap
-     * @param $components
-     * @param $log
-     *
-     * @return array $config
-     */
-    public function getConfig($pathAuthoload, $pathDb, $basePath, $bootstrap, $components, $log)
+    private $arrData = [];
+
+    public function __construct(array $arr)
     {
-        return $config = [
-            'pathAuthoload' => $pathAuthoload,
-            'pathDb'        => $pathDb,
-            'basePath'      => $basePath,
-            'bootstrap'     => $bootstrap,
-            'components'    => $components,
-            'log'           => $log,
-        ];
+        $this->arrData = $arr;
     }
 
     /**
-     * @param $class
-     * @param $dsn
-     * @param $userName
-     * @param $password
-     * @param $charset
+     * @param string $key format node/node/node^n
      *
-     * @return array $config
+     * @return bool
      */
-    public function getConfigDb($class, $dsn, $userName, $password, $charset)
+    public function has($key)
     {
-        return $config = [
-            'class'    => $class,
-            'dsn'      => $dsn,
-            'username' => $userName,
-            'password' => $password,
-            'charset'  => $charset,
+        $obArrWrapper = new \Api\Base\ArrayWrapper($this->arrData);
 
-        ];
+        return $obArrWrapper->has($key);
+    }
+
+    /**
+     * @param string $key format node/node/node^n
+     *
+     * @return mixed|null
+     * @throws \Api\Base\KeyNotFound
+     */
+    public function get($key)
+    {
+        if (!$this->has($key)) {
+            throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
+        }
+
+        $obArrWrapper = new \Api\Base\ArrayWrapper($this->arrData);
+        return $obArrWrapper->get($key);
     }
 }

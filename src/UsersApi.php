@@ -1,5 +1,7 @@
 <?php
 
+namespace Api\Base;
+
 //require_once 'Api.php';
 //require_once 'Db.php';
 //require_once 'Users.php';

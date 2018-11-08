@@ -1,5 +1,7 @@
 <?php
 
+namespace Api\Base;
+
 class Api
 {
     public $method = '';
