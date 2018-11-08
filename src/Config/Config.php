@@ -10,6 +10,7 @@ class Config
     {
         $this->arrData = $arr;
     }
+
     /**
      * @param string $key node/node/node^n
      *
