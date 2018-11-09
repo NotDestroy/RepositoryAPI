@@ -75,23 +75,21 @@ class ArrayWrapper
             if (isset($saveLevelArr[$key])) {
                 if (is_array($saveLevelArr[$key])) {
                     $saveLevelArr = &$saveLevelArr[$key];
-                } else {
-                    $saveLevelArr[$key] = [];
+                    continue;
                 }
+                $saveLevelArr[$key] = [];
+            }
+            if ($arrKeys[$rightAmountKeys] === $key) {
+                $saveLevelArr[$key] = $value;
+                $result             = $this->array;
+            }
+            if ($arrKeys[0] === $key) {
+                $levelArr[$arrKeys[$i]] = [];
             } else {
-                if ($arrKeys[$rightAmountKeys] === $key) {
-                    $saveLevelArr[$key] = $value;
-                    $result             = $this->array;
-                } else {
-                    if ($arrKeys[0] === $key) {
-                        $levelArr[$arrKeys[$i]] = [];
-                    } else {
-                        $saveLevelArr[$key] = [];
-                    }
-                    if (isset($saveLevelArr[$key])) {
-                        $saveLevelArr = &$saveLevelArr[$key];
-                    }
-                }
+                $saveLevelArr[$key] = [];
+            }
+            if (isset($saveLevelArr[$key])) {
+                $saveLevelArr = &$saveLevelArr[$key];
             }
             $i++;
         }
