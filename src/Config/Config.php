@@ -18,41 +18,18 @@ class Config
      */
     public function has($key)
     {
-        try {
-            $this->get($key);
-        } catch (\Api\Base\KeyNotFound $e) {
-            return false;
-        }
-
-        return true;
+        $obArrayWrapper = new \Api\Base\ArrayWrapper($this->arrData);
+        return $obArrayWrapper->has($key);
     }
 
     /**
      * @param string $key node/node/node^n
      *
      * @return mixed|null
-     * @throws \Api\Base\KeyNotFound
      */
     public function get($key)
     {
-        $arrKeys     = explode('/', $key);
-        $amount      = count($arrKeys);
-        $rightAmount = ($amount - 1);
-        $arrData     = $this->arrData;
-        for ($i = 0; $i <= $amount; $i++) {
-            if (empty($arrData)) {
-                throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
-            }
-            if (!array_key_exists($arrKeys[$i], $arrData)) {
-                throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
-            }
-
-            if ($rightAmount === $i) {
-                return $arrData[$arrKeys[$i]];
-            }
-
-            $arrData = $arrData[$arrKeys[$i]];
-        }
-        throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
+        $obArrayWrapper = new \Api\Base\ArrayWrapper($this->arrData);
+        return $obArrayWrapper->get($key);
     }
 }
