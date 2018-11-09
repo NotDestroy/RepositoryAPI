@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Base;
+namespace Api\Base\Utils;
 
 class ArrayWrapper
 {

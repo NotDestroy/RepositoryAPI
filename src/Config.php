@@ -5,10 +5,12 @@ namespace Api\Base\Config;
 class Config
 {
     private $arrData = [];
+    private $obArrayWrapper;
 
     public function __construct(array $arr)
     {
         $this->arrData = $arr;
+        $this->obArrayWrapper = new \Api\Base\Utils\ArrayWrapper($this->arrData);
     }
 
     /**
@@ -18,8 +20,7 @@ class Config
      */
     public function has($key)
     {
-        $obArrayWrapper = new \Api\Base\ArrayWrapper($this->arrData);
-        return $obArrayWrapper->has($key);
+        return $this->obArrayWrapper->has($key);
     }
 
     /**
@@ -29,7 +30,6 @@ class Config
      */
     public function get($key)
     {
-        $obArrayWrapper = new \Api\Base\ArrayWrapper($this->arrData);
-        return $obArrayWrapper->get($key);
+        return $this->obArrayWrapper->get($key);
     }
 }
