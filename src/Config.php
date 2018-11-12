@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Base\Config;
+namespace Api\Base;
 
 class Config
 {
