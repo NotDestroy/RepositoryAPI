@@ -15,7 +15,6 @@ class Bootstrap
     }
     public function run()
     {
-        require_once __DIR__ . '/Exception.php';
         require_once __DIR__ . '/ErrorHandler.php';
         require_once __DIR__ . '/FatalErrorHandler.php';
         require_once __DIR__ . '/UncaughtExceptions.php';

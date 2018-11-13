@@ -30,7 +30,5 @@ class ErrorHandler
         $obResurs = \Api\Base\Resurs::$instance;
         $obLogger = $obResurs->getInstanceLogger();
         $obLogger->writeLog($record, $group);
-
-        throw new Exception('');
     }
 }

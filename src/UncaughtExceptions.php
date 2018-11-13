@@ -25,6 +25,6 @@ class UncaughtExceptions
         $obLogger       = $obResurs->getInstanceLogger();
         $obLogger->writeLog($record, $group);
 
-        throw new Exception($message);
+        throw new Exception($message . ' ' . $type . ' ' . $group . ' ' . $additionalData);
     }
 }
