@@ -9,6 +9,8 @@ class ErrorHandler
      * @param $errMess
      * @param $errFile
      * @param $errLine
+     *
+     * @throws \Api\Base\Exception
      */
     public function errorHandler($errNo, $errMess, $errFile, $errLine)
     {
@@ -25,7 +27,10 @@ class ErrorHandler
             $type = 'Notice';
         }
         $record = new Record($message, $type, $additionalData);
-        $logger = new \Api\Base\Logger();
-        $logger->writeLog($record, $group);
+        $obResurs = \Api\Base\Resurs::$instance;
+        $obLogger = $obResurs->getInstanceLogger();
+        $obLogger->writeLog($record, $group);
+
+        throw new Exception('');
     }
 }

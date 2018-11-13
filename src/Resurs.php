@@ -6,15 +6,15 @@ class Resurs
 {
     public        $instanceConfig = null;
     public        $instanceLogger = null;
-    public        $arrResult      = [];
     public static $instance;
 
     private function __construct()
     {
-        $this->instanceConfig = new Config($arrData);
-        $this->instanceLogger = new Logger();
     }
 
+    /**
+     * @return \Api\Base\Resurs
+     */
     public static function getInstanceResurs()
     {
         if (!isset(self::$instance)) {
@@ -24,30 +24,27 @@ class Resurs
         return self::$instance;
     }
 
+    /**
+     * @return \Api\Base\Config
+     */
     public function getInstanceConfig()
     {
+        if ($this->instanceConfig === null) {
+            $this->instanceConfig = new Config($arr = []);
+        }
+
         return $this->instanceConfig;
     }
 
+    /**
+     * @return \Api\Base\Logger
+     */
     public function getInstanceLogger()
     {
+        if ($this->instanceLogger === null) {
+            $this->instanceLogger = new Logger($path = '');
+        }
+
         return $this->instanceLogger;
     }
-    //public function getInstanceConfig()
-    //{
-    //    if ($this->instanceConfig === null) {
-    //        $this->instanceConfig = new Config();
-    //    }
-    //
-    //    return $this->instanceConfig;
-    //}
-    //
-    //public function getInstanceLogger()
-    //{
-    //    if ($this->instanceLogger === null) {
-    //        $this->instanceLogger = new Logger();
-    //    }
-    //
-    //    return $this->instanceLogger;
-    //}
 }

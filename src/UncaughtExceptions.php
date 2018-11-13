@@ -4,6 +4,11 @@ namespace Api\Base;
 
 class UncaughtExceptions
 {
+    /**
+     * @param \Exception $exception
+     *
+     * @throws \Api\Base\Exception
+     */
     function exceptionHandler(\Exception $exception)
     {
         $arrTrace       = $exception->getTrace();
@@ -16,7 +21,10 @@ class UncaughtExceptions
             'class'    => $arrTrace[0]['class']
         ];
         $record         = new Record($message, $type, $additionalData);
-        $logger         = new \Api\Base\Logger();
-        $logger->writeLog($record, $group);
+        $obResurs       = \Api\Base\Resurs::$instance;
+        $obLogger       = $obResurs->getInstanceLogger();
+        $obLogger->writeLog($record, $group);
+
+        throw new Exception($message);
     }
 }

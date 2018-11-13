@@ -4,6 +4,9 @@ namespace Api\Base;
 
 class FatalErrorHandler
 {
+    /**
+     * @throws \Api\Base\Exception
+     */
     public function fatalErrorHandler()
     {
         $errorInfo = error_get_last();
@@ -15,8 +18,11 @@ class FatalErrorHandler
                 'Line' => $errorInfo['line']
             ];
             $record         = new Record($message, $type, $additionalData);
-            $logger         = new \Api\Base\Logger();
-            $logger->writeLog($record, $group);
+            $obResurs = \Api\Base\Resurs::$instance;
+            $obLogger = $obResurs->getInstanceLogger();
+            $obLogger->writeLog($record, $group);
+
+            throw new Exception('');
         }
     }
 }
