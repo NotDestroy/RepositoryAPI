@@ -4,10 +4,10 @@ namespace Api\Base;
 
 class Exception extends \Exception
 {
-    public $message;
-    public $type;
-    public $group;
-    public $additionalData = [];
+    private $message;
+    private $type;
+    private $group;
+    private $additionalData = [];
 
     public function __construct($message, $type, $group, $additionalData = null, $flag = false)
     {

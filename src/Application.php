@@ -4,8 +4,8 @@ namespace Api\Base;
 
 class Application
 {
-    public $requestUri = [];
-    public $requestParams = [];
+    private $requestUri = [];
+    private $requestParams = [];
 
     public function __construct()
     {

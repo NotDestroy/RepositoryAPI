@@ -16,7 +16,7 @@ class FatalErrorHandler
                 'Line' => $errorInfo['line']
             ];
             $record         = new Record($message, $type, $additionalData);
-            $obResurs = \Api\Base\Resurs::$instance;
+            $obResurs = \Api\Base\Resources::$instance;
             $obLogger = $obResurs->getInstanceLogger();
             $obLogger->writeLog($record, $group);
         }

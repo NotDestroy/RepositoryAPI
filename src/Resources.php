@@ -2,10 +2,10 @@
 
 namespace Api\Base;
 
-class Resurs
+class Resources
 {
-    public        $instanceConfig = null;
-    public        $instanceLogger = null;
+    private        $instanceConfig = null;
+    private        $instanceLogger = null;
     public static $instance;
 
     private function __construct()
@@ -13,12 +13,12 @@ class Resurs
     }
 
     /**
-     * @return \Api\Base\Resurs
+     * @return \Api\Base\Resources
      */
     public static function getInstanceResurs()
     {
         if (!isset(self::$instance)) {
-            self::$instance = new Resurs();
+            self::$instance = new Resources();
         }
 
         return self::$instance;

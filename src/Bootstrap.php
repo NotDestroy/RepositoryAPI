@@ -4,7 +4,7 @@ namespace Api\Base;
 
 class Bootstrap
 {
-    public $rootPath;
+    private $rootPath;
 
     /**
      * @param string $rootPath
@@ -15,8 +15,17 @@ class Bootstrap
     }
     public function run()
     {
-        require_once __DIR__ . '/ErrorHandler.php';
-        require_once __DIR__ . '/FatalErrorHandler.php';
-        require_once __DIR__ . '/UncaughtExceptions.php';
+        $obExceptionHandler = new ExceptionHandler();
+        set_exception_handler(array($obExceptionHandler, 'exceptionHandler'));
+
+        $ObErrHandler = new ErrorHandler();
+        $errorTypes = E_WARNING | E_NOTICE;
+        set_error_handler(array($ObErrHandler, 'errorHandler'), $errorTypes);
+
+        $ObErrHandler = new FatalErrorHandler();
+        ob_start(array($ObErrHandler, 'fatalErrorHandler'));
+
+        $ObErrHandler = new FatalErrorHandler();
+        register_shutdown_function(array($ObErrHandler, 'fatalErrorHandler'));
     }
 }
