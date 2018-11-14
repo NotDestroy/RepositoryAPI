@@ -14,7 +14,7 @@ class Bootstrap
         $this->rootPath = $rootPath;
     }
 
-    private function exceptionHandler (\Exception $exception)
+    private function exceptionHandler(\Exception $exception)
     {
         $obResurs = \Api\Base\Resources::$instance;
         $obLogger = $obResurs->getInstanceLogger();
@@ -35,7 +35,7 @@ class Bootstrap
         if ($errNo == E_NOTICE) {
             $type = 'Notice';
         }
-        $record = new Record($message, $type, $additionalData);
+        $record   = new Record($message, $type, $additionalData);
         $obResurs = \Api\Base\Resources::$instance;
         $obLogger = $obResurs->getInstanceLogger();
         $obLogger->writeLog($record, $group);
@@ -54,21 +54,29 @@ class Bootstrap
                 'Line' => $errorInfo['line']
             ];
             $record         = new Record($message, $type, $additionalData);
-            $obResurs = \Api\Base\Resources::$instance;
-            $obLogger = $obResurs->getInstanceLogger();
+            $obResurs       = \Api\Base\Resources::$instance;
+            $obLogger       = $obResurs->getInstanceLogger();
             $obLogger->writeLog($record, $group);
         }
     }
 
     public function run()
     {
-        set_exception_handler('exceptionHandler');
+        set_exception_handler(function (\Exception $exception) {
+            $this->exceptionHandler($exception);
+        });
 
-        $errorTypes   = E_WARNING | E_NOTICE;
-        set_error_handler('errorHandler', $errorTypes);
+        $errorTypes = E_WARNING | E_NOTICE;
+        set_error_handler(function ($errNo, $errMess, $errFile, $errLine) {
+            $this->errorHandler($errNo, $errMess, $errFile, $errLine);
+        }, $errorTypes);
 
-        ob_start('fatalErrorHandler');
+        ob_start(function () {
+            $this->fatalErrorHandler();
+        });
 
-        register_shutdown_function('fatalErrorHandler');
+        register_shutdown_function(function () {
+            $this->fatalErrorHandler();
+        });
     }
 }
