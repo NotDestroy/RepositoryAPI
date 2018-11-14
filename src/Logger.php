@@ -33,9 +33,9 @@ class Logger
     }
 
     /**
-     * @param \Api\Base\ExceptionHandler $exception
+     * @param $exception
      */
-    public function writeException(ExceptionHandler $exception)
+    public function writeException($exception)
     {
         $arrTrace = $exception->getTrace();
         $record   = new Record($exception->getMessage(), 'Error', [
