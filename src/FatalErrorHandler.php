@@ -4,9 +4,7 @@ namespace Api\Base;
 
 class FatalErrorHandler
 {
-    /**
-     * @throws \Api\Base\Exception
-     */
+
     public function fatalErrorHandler()
     {
         $errorInfo = error_get_last();

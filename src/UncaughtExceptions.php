@@ -6,8 +6,6 @@ class UncaughtExceptions
 {
     /**
      * @param \Exception $exception
-     *
-     * @throws \Api\Base\Exception
      */
     function exceptionHandler(\Exception $exception)
     {
@@ -24,7 +22,5 @@ class UncaughtExceptions
         $obResurs       = \Api\Base\Resurs::$instance;
         $obLogger       = $obResurs->getInstanceLogger();
         $obLogger->writeLog($record, $group);
-
-        throw new Exception($message . ' ' . $type . ' ' . $group . ' ' . $additionalData);
     }
 }
