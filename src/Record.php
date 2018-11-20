@@ -6,18 +6,18 @@ class Record
 {
     private $message;
     private $type;
-    private $additionalData;
+    private $line;
 
     /**
-     * @param       $message
-     * @param       $type
-     * @param array $additionalData
+     * @param $message
+     * @param $type
+     * @param $line
      */
-    public function __construct($message, $type, array $additionalData)
+    public function __construct($message, $type, $line)
     {
         $this->message = $message;
         $this->type = $type;
-        $this->additionalData = $additionalData;
+        $this->line = 'on line ' . $line;
     }
 
     /**
@@ -37,11 +37,11 @@ class Record
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getAdditionalData()
+    public function getLine()
     {
-        return $this->additionalData;
+        return $this->line;
     }
 
 }

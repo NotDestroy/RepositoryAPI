@@ -30,7 +30,7 @@ class Resources
     public function getInstanceConfig()
     {
         if ($this->instanceConfig === null) {
-            $this->instanceConfig = new Config($arr = []);
+            $this->instanceConfig = new Config([]);
         }
 
         return $this->instanceConfig;
@@ -39,10 +39,10 @@ class Resources
     /**
      * @return \Api\Base\Logger
      */
-    public function getInstanceLogger()
+    public function getInstanceLogger($path)
     {
         if ($this->instanceLogger === null) {
-            $this->instanceLogger = new Logger($path = '');
+            $this->instanceLogger = new Logger($path);
         }
 
         return $this->instanceLogger;

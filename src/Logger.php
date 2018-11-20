@@ -22,14 +22,13 @@ class Logger
         if (!file_exists($this->path)) {
             return false;
         }
-        $content = [
-            'message'        => $record->getMessage(),
-            'type'           => $record->getType(),
-            'additionalData' => json_encode(($record->getAdditionalData())),
-            'group'          => $textGroup,
-            'date'           => date("d-m-Y H:i:s")
-        ];
-        file_put_contents($this->path, json_encode($content));
+        $content      = 'Message => ' . $record->getMessage() . ";\r\nErr_Line => " .
+            $record->getLine() . ";\r\nErr_File => " . $textGroup . ";\r\nTime => " . date("d-m-Y H:i:s") . ";\r\n\r\n";
+
+        $pathLog = $this->path . '\\' . $record->getType() . '.log';
+        $fileOpen = fopen($pathLog, 'a');
+        fwrite($fileOpen, $content);
+        fclose($fileOpen);
     }
 
     /**
@@ -38,12 +37,7 @@ class Logger
     public function writeException($exception)
     {
         $arrTrace = $exception->getTrace();
-        $record   = new Record($exception->getMessage(), 'Error', [
-            'Line'     => $arrTrace[0]['line'],
-            'function' => $arrTrace[0]['function'],
-            'class'    => $arrTrace[0]['class']
-        ]);
-
+        $record   = new Record($exception->getMessage(), 'Exception', $arrTrace[0]['line']);
         $this->writeLog($record, $arrTrace[0]['file']);
     }
 }
