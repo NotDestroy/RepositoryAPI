@@ -22,14 +22,20 @@ class Application
 
         $obResurs = \Api\Base\Resources::getInstanceResurs();
         $obConfig = $obResurs->getInstanceConfig();
-        if ($obConfig->has('command/path')) {
-            if ($obConfig->get('command/path') === $this->requestUri) {
-                if ($obConfig->has('command/method')) {
-                    if ($obConfig->get('command/method') === $this->method) {
-                        if ($obConfig->has('command/handler')) {
-                            if (is_subclass_of($obConfig->get('command/handler'),
-                                'Api\Base\Command\Handler\BaseInterface')) {
-                                return $obConfig->get('command/handler');
+        if ($obConfig->has('command')) {
+            foreach ($obConfig->get('command') as $oneCommand) {
+                if (array_key_exists('path', $oneCommand)) {
+                    if ($oneCommand['path'] === $this->requestUri) {
+                        if (array_key_exists('method', $oneCommand)) {
+                            if ($oneCommand['method'] === $this->method) {
+                                if (array_key_exists('handler', $oneCommand)) {
+                                    if (is_subclass_of($oneCommand['handler'],
+                                        'Api\Base\Command\Handler\BaseInterface')) {
+                                        $ob = new $oneCommand['handler']();
+
+                                        return $ob->process();
+                                    }
+                                }
                             }
                         }
                     }
@@ -42,8 +48,10 @@ class Application
 
     // ########################################
 
-    private function requestStatus($code)
-    {
+    private
+    function requestStatus(
+        $code
+    ) {
         $status = [
             200 => 'OK',
             404 => 'Not Found',
