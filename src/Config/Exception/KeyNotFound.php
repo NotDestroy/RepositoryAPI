@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Base;
+namespace Api\Base\Config\Exception;
 
 class KeyNotFound extends \Exception
 {

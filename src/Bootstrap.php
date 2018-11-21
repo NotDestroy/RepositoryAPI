@@ -27,10 +27,6 @@ class Bootstrap
             $this->errorHandler($errNo, $errMess, $errFile, $errLine);
         }, $errorTypes);
 
-        //ob_start(function () {
-        //    $this->fatalErrorHandler();
-        //});
-
         register_shutdown_function(function () {
             $this->fatalErrorHandler();
         });
@@ -51,7 +47,7 @@ class Bootstrap
         if ($errNo == E_NOTICE) {
             $type = 'Notice';
         }
-        $record   = new Record($errMess, $type, $errLine);
+        $record   = new Logger\Record($errMess, $type, $errLine);
         $obResurs = \Api\Base\Resources::getInstanceResurs();
         $obLogger = $obResurs->getInstanceLogger($this->rootPath . '\vars\logs');
         $obLogger->writeLog($record, $errFile);
@@ -63,7 +59,7 @@ class Bootstrap
     {
         $errorInfo = error_get_last();
         if (is_array($errorInfo) && in_array($errorInfo['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
-            $record   = new Record($errorInfo['message'], 'Fatal Error', $errorInfo['line']);
+            $record   = new Logger\Record($errorInfo['message'], 'Fatal Error', $errorInfo['line']);
             $obResurs = \Api\Base\Resources::getInstanceResurs();
             $obLogger = $obResurs->getInstanceLogger($this->rootPath . '\vars\logs');
             $obLogger->writeLog($record, $errorInfo['file']);

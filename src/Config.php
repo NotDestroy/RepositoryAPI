@@ -4,7 +4,7 @@ namespace Api\Base;
 
 class Config
 {
-    private $arrData = [];
+    private $arrData;
     private $obArrayWrapper;
 
     public function __construct(array $arr)

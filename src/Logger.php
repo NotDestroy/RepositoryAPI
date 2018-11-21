@@ -12,15 +12,13 @@ class Logger
     }
 
     /**
-     * @param \Api\Base\Record $record
-     * @param                  $textGroup
-     *
-     * @return bool
+     * @param \Api\Base\Logger\Record $record
+     * @param                         $textGroup
      */
-    public function writeLog(\Api\Base\Record $record, $textGroup)
+    public function writeLog(\Api\Base\Logger\Record $record, $textGroup)
     {
         if (!file_exists($this->path)) {
-            return false;
+            mkdir($this->path, 0777, true);
         }
         $content      = 'Message => ' . $record->getMessage() . ";\r\nErr_Line => " .
             $record->getLine() . ";\r\nErr_File => " . $textGroup . ";\r\nTime => " . date("d-m-Y H:i:s") . ";\r\n\r\n";
@@ -37,7 +35,7 @@ class Logger
     public function writeException($exception)
     {
         $arrTrace = $exception->getTrace();
-        $record   = new Record($exception->getMessage(), 'Exception', $arrTrace[0]['line']);
+        $record   = new Logger\Record($exception->getMessage(), 'Exception', $arrTrace[0]['line']);
         $this->writeLog($record, $arrTrace[0]['file']);
     }
 }

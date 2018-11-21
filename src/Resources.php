@@ -27,10 +27,10 @@ class Resources
     /**
      * @return \Api\Base\Config
      */
-    public function getInstanceConfig()
+    public function getInstanceConfig(array $config = [])
     {
         if ($this->instanceConfig === null) {
-            $this->instanceConfig = new Config([]);
+            $this->instanceConfig = new Config($config);
         }
 
         return $this->instanceConfig;

@@ -20,7 +20,7 @@ class ArrayWrapper
     {
         try {
             $this->get($key);
-        } catch (\Api\Base\KeyNotFound $e) {
+        } catch (\Api\Base\Config\Exception\KeyNotFound $e) {
             return false;
         }
 
@@ -31,7 +31,7 @@ class ArrayWrapper
      * @param $key
      *
      * @return mixed
-     * @throws \Api\Base\KeyNotFound
+     * @throws \Api\Base\Config\Exception\KeyNotFound
      */
     public function get($key)
     {
@@ -41,10 +41,10 @@ class ArrayWrapper
         $arrData     = $this->array;
         for ($i = 0; $i <= $amount; $i++) {
             if (empty($arrData)) {
-                throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
+                throw new \Api\Base\Config\Exception\KeyNotFound('Ошибка: такого ключа не существует');
             }
             if (!array_key_exists($arrKeys[$i], $arrData)) {
-                throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
+                throw new \Api\Base\Config\Exception\KeyNotFound('Ошибка: такого ключа не существует');
             }
 
             if ($rightAmount === $i) {
@@ -53,7 +53,7 @@ class ArrayWrapper
 
             $arrData = $arrData[$arrKeys[$i]];
         }
-        throw new \Api\Base\KeyNotFound('Ошибка: такого ключа не существует');
+        throw new \Api\Base\Config\Exception\KeyNotFound('Ошибка: такого ключа не существует');
     }
 
     /**
