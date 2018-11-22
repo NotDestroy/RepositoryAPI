@@ -29,20 +29,15 @@ class Application
             if (!array_key_exists('path', $oneCommand)) {
                 throw new \Api\Base\Config\Exception\KeyNotFound('Ошибка: такого ключа не существует');
             }
-            if ($oneCommand['path'] !== $this->requestUri) {
-                return false;
-            }
             if (!array_key_exists('method', $oneCommand)) {
                 throw new \Api\Base\Config\Exception\KeyNotFound('Ошибка: такого ключа не существует');
-            }
-            if ($oneCommand['method'] !== $this->method) {
-                return false;
             }
             if (!array_key_exists('handler', $oneCommand)) {
                 throw new \Api\Base\Config\Exception\KeyNotFound('Ошибка: такого ключа не существует');
             }
             if (is_subclass_of($oneCommand['handler'],
-                'Api\Base\Command\Handler\BaseInterface')) {
+                    'Api\Base\Command\Handler\BaseInterface') && $oneCommand['method'] === $this->method
+                && $oneCommand['path'] === $this->requestUri) {
                 $ob = new $oneCommand['handler']();
 
                 return $ob->process();
