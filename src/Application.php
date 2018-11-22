@@ -22,24 +22,30 @@ class Application
 
         $obResurs = \Api\Base\Resources::getInstanceResurs();
         $obConfig = $obResurs->getInstanceConfig();
-        if ($obConfig->has('command')) {
-            foreach ($obConfig->get('command') as $oneCommand) {
-                if (array_key_exists('path', $oneCommand)) {
-                    if ($oneCommand['path'] === $this->requestUri) {
-                        if (array_key_exists('method', $oneCommand)) {
-                            if ($oneCommand['method'] === $this->method) {
-                                if (array_key_exists('handler', $oneCommand)) {
-                                    if (is_subclass_of($oneCommand['handler'],
-                                        'Api\Base\Command\Handler\BaseInterface')) {
-                                        $ob = new $oneCommand['handler']();
+        if (!$obConfig->has('command')) {
+            return false;
+        }
+        foreach ($obConfig->get('command') as $oneCommand) {
+            if (!array_key_exists('path', $oneCommand)) {
+                throw new \Api\Base\Config\Exception\KeyNotFound('Ошибка: такого ключа не существует');
+            }
+            if ($oneCommand['path'] !== $this->requestUri) {
+                return false;
+            }
+            if (!array_key_exists('method', $oneCommand)) {
+                throw new \Api\Base\Config\Exception\KeyNotFound('Ошибка: такого ключа не существует');
+            }
+            if ($oneCommand['method'] !== $this->method) {
+                return false;
+            }
+            if (!array_key_exists('handler', $oneCommand)) {
+                throw new \Api\Base\Config\Exception\KeyNotFound('Ошибка: такого ключа не существует');
+            }
+            if (is_subclass_of($oneCommand['handler'],
+                'Api\Base\Command\Handler\BaseInterface')) {
+                $ob = new $oneCommand['handler']();
 
-                                        return $ob->process();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                return $ob->process();
             }
         }
 
